@@ -36,6 +36,7 @@ CREATE TABLE employee (
 
 
 
+-- for DECIMAL : for example (5, 2), 5 digits and 2 values after decimal, for ex 999.99
 
 -- A foreign key with "set null on delete" means that if a record in the parent table is deleted, then the 
 -- corresponding records in the child  table will have the 
