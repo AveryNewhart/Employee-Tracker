@@ -6,9 +6,9 @@ const mysql = require('mysql2'); // mysql2 download/install
 require('console.table'); // installing console table, better format in console log. npm install console.table --save
 
 // refering to the class files. functions in these files for when you add any of the three. 
-const newDepartment = require('./newDepartment'); // new department class file
-const newEmployee = require('./newEmployee'); // new employee class file
-const newRole = require('./newRole'); // new role class file
+const NewDepartment = require('./newDepartment'); // new department class file
+const NewEmployee = require('./newEmployee'); // new employee class file
+const NewRole = require('./newRole'); // new role class file
 
 // connecting to the database
 const db = mysql.createConnection( // mysql is requiring mysql2 (line3). It is then creating a connection to the employer database in my schema.sql file.
@@ -68,6 +68,36 @@ const runApp = () => {
 
 const addDepartmentQ = () => {
     return inquirer.prompt
+
+    ([
+        {
+            type: 'input',
+            name: 'departmentName',
+            message: 'enter the name of the department:',
+            validate: (value) => {
+                if(value) {
+                    return true;
+                } else {
+                    console.log('input department name to continue.')
+                }
+            }
+        }
+    ])
+    .then(function(department) {
+        const newD = new NewDepartment (department.departmentName) // NewDepartment is what was referenced at the top of the file(referencing the class file)
+
+        const name = newD.name //deconstructing / breaking down the object that was created to query.
+
+        db.query('INSERT INTO department (name) VALUES(?)', name, (err, results) => { // saying insert into depsrtment table, and what row.
+            if (err) { //error and returns to the first question
+                console.log(err)
+                return runApp();
+            } else { // successful and returns to first question
+                console.log('Department has been added.') 
+                return runApp();
+            }
+        })
+    })
 }
 
 
