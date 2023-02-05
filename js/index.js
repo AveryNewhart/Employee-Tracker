@@ -35,7 +35,7 @@ const runApp = () => {
             type: 'list',
             name: 'choice',
             message: 'Please choose one of the following.',
-            choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role']
+            choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'exit']
         }
     ])
     .then(function(data) {
@@ -77,6 +77,8 @@ const runApp = () => {
             addEmployeeQ(); // this is running the function to add an employees last name, first name, role, and their manager. Then the employee is sent to the database.
         } else if(data.choice === 'update an employee role') { // if user chooses this
             updateRoleQ(); // this is running the function to select an employee(id?) and you will be able to update their role and that is sent back to the database.
+        } else if(data.first == 'exit') {
+            process.exit(console.log("Goodbye!")); // if user selects exit, it will exit the app.
         }
     })
 }
