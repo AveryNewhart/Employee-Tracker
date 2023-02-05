@@ -15,7 +15,7 @@ CREATE TABLE department (
 CREATE TABLE role (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, -- auto increment the primary key,
     roleN VARCHAR(30),
-    salary DECIMAL,
+    roleS DECIMAL,
     depId INT, -- hold reference to department the role belongs to
     FOREIGN KEY (depId) -- getting the primary key from department table and making it a foreign key.
     REFERENCES department(id) -- tells it to refer to the department table to get the id. 

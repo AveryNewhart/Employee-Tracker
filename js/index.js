@@ -194,7 +194,7 @@ const addRoleQ = () => {
 const addEmployeeQ = () => {
     return inquirer.prompt
 
-    [(
+    ([
         {
             type: 'input',
             name: 'lastName',
@@ -218,8 +218,8 @@ const addEmployeeQ = () => {
                     console.log('Enter your FIRST name to continue')
                 }
             }
-        }
-    )]
+        },
+    ])
     .then(function(empData) { // deconstructing data
         let lastN = empData.lastName // referencing name: 'lastName'.
         let firstN = empData.firstName // referencing name: 'firstName'.
@@ -265,7 +265,7 @@ const addEmployeeQ = () => {
                     [lastN, firstN, managerId, roleId]
                 ]
 
-                db.query('INSERT INTO employee (lastN, firstN, managerId, roleId) VALUES (?)'), empVal, (err, results) => {
+                db.query('INSERT INTO employee (lastN, firstN, managerId, roleId) VALUES (?)', empVal, (err, results) => {
                     if(err) {
                         console.log(err);
                         return runApp();
@@ -273,7 +273,7 @@ const addEmployeeQ = () => {
                         console.log('Employee and all data has been logged succesfully!');
                         return runApp();
                     }
-                }
+                })
             })
         })
     })

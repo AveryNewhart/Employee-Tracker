@@ -7,7 +7,7 @@ VALUES
 ("Human Resources"),
 ("Maintenence Team");
 
-INSERT INTO role (roleN, salary, depId)
+INSERT INTO role (roleN, roleS, depId)
 VALUES
 ("Technical Support Emplopyee", 88000, 1),
 ("Customer Support Employee", 77000, 2),
