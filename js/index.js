@@ -41,18 +41,33 @@ const runApp = () => {
     .then(function(data) {
         if(data.choice === 'view all departments') { // if user chooses this
             db.query('SELECT * FROM department', function(err, results) { // query the department table.
-                console.table(results);
-                return runApp(); //returns to beginning question.
-            })
+                if(err) {
+                    console.log(err);
+                    return runApp();
+                    } else {
+                        console.table(results);
+                        return runApp(); //returns to beginning question.
+                    }  
+        })
         } else if(data.choice === 'view all roles') { // if user chooses this
             db.query('SELECT * FROM role', function(err, results) { // query the role table
-                console.table(results);
-                return runApp(); // returns to beginning question
+                if(err) {
+                    console.log(err);
+                    return runApp();
+                    } else {
+                        console.table(results);
+                        return runApp(); //returns to beginning question.
+                    }
             })
         } else if(data.choice === 'view all employees') { // if user chooses this
             db.query('SELECT * FROM employee', function(err, results) { // query the employee table
-                console.table(results);
-                return runApp(); // returns to beggining question
+                if(err) {
+                    console.log(err);
+                    return runApp();
+                    } else {
+                        console.table(results);
+                        return runApp(); //returns to beginning question.
+                    }
             })
         } else if(data.choice === 'add a department') { // if user chooses this
             addDepartmentQ(); // this is running the function to add a department name to the database

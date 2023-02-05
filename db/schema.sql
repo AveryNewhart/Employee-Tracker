@@ -9,7 +9,7 @@ USE employer_db;
 
 CREATE TABLE department (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, -- auto increment the primary key
-    name VARCHAR(30), -- hold department name
+    name VARCHAR(30) -- hold department name
 );
 
 CREATE TABLE role (
