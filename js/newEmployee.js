@@ -1,9 +1,9 @@
 // new employee class
-function Employee(lastName, firstName, role, manager) {
-    this.lastName = lastName;
-    this.firstName = firstName;
-    this.role = role;
-    this.manager = manager;
+function Employee(lastN, firstN, roleId, managerId) {
+    this.lastN = lastN;
+    this.firstN = firstN;
+    this.roleId = roleId;
+    this.managerId = managerId;
 }
 
 module.exports = Employee

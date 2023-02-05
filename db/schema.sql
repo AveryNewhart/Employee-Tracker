@@ -1,6 +1,8 @@
 -- create three tables
     -- data for the tables/columns in the mod chal guideline
 
+DROP DATABASE IF EXISTS employer_db;
+
 -- creating database
 CREATE DATABASE employer_db;
 
