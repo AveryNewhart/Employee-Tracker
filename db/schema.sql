@@ -14,21 +14,21 @@ CREATE TABLE department (
 
 CREATE TABLE role (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, -- auto increment the primary key,
-    title VARCHAR(30),
+    roleN VARCHAR(30),
     salary DECIMAL,
-    department_id INT, -- hold reference to department the role belongs to
-    FOREIGN KEY (department_id) -- getting the primary key from department table and making it a foreign key.
+    depId INT, -- hold reference to department the role belongs to
+    FOREIGN KEY (depId) -- getting the primary key from department table and making it a foreign key.
     REFERENCES department(id) -- tells it to refer to the department table to get the id. 
     ON DELETE SET NULL -- sets everything to NULL if content from parent table is deleted.
 );
 
 CREATE TABLE employee (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(30) NOT NULL,
-    last_name VARCHAR(30) NOT NULL,
-    role_id INT, -- hold reference for employee roll
-    manager_id INT, -- hold reference to another employee that is the manager of the current employee (null if the employee has no manager)
-    FOREIGN KEY (role_id) -- after employee!! so this will refer to the key in the role table. 
+    lastN VARCHAR(30) NOT NULL,
+    firstN VARCHAR(30) NOT NULL,
+    roleId INT, -- hold reference for employee roll
+    managerId INT, -- hold reference to another employee that is the manager of the current employee (null if the employee has no manager)
+    FOREIGN KEY (roleId) -- after employee!! so this will refer to the key in the role table. 
     REFERENCES role(id) -- refering to the role table and the id inside(the foregin key that was go by gettin gthe primary key earlier.)
     ON DELETE SET NULL -- sets everything to NULL if content from parent table is deleted.
 );
