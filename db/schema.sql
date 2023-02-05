@@ -15,7 +15,7 @@ CREATE TABLE department (
 CREATE TABLE role (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, -- auto increment the primary key,
     roleN VARCHAR(30),
-    roleS DECIMAL,
+    roleS INT,
     depId INT, -- hold reference to department the role belongs to
     FOREIGN KEY (depId) -- getting the primary key from department table and making it a foreign key.
     REFERENCES department(id) -- tells it to refer to the department table to get the id. 
@@ -32,12 +32,3 @@ CREATE TABLE employee (
     REFERENCES role(id) -- refering to the role table and the id inside(the foregin key that was go by gettin gthe primary key earlier.)
     ON DELETE SET NULL -- sets everything to NULL if content from parent table is deleted.
 );
-
-
-
-
--- for DECIMAL : for example (5, 2), 5 digits and 2 values after decimal, for ex 999.99
-
--- A foreign key with "set null on delete" means that if a record in the parent table is deleted, then the 
--- corresponding records in the child  table will have the 
--- foreign key fields set to NULL. The records in the child table will not be deleted in SQL Server.
