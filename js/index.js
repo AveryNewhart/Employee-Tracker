@@ -280,6 +280,64 @@ const addEmployeeQ = () => {
     })
 }
 
+// update role function
+const updateRoleQ = () => {
+    db.promise().query('SELECT firstN FROM employee') //selecting first name from employee table
+    .then(([rows, fields]) => {
+        return inquirer.prompt({
+            type: 'list',
+            name: 'updateN',
+            message: 'Select an emplployee to update:',
+            choices: rows.filter(u => !!u.firstN ).map(u => u.firstN),
+            validate: (value) => {
+                if(value) {
+                    return true;
+                } else {
+                    console.log('Select a employee to continue.')
+                }
+            }
+        })
+    })
+        .then(function(empNewRole) {
+            let nameToUpd = empNewRole.updateN
+
+            db.promise().query('SELECT roleId FROM employee') // selecting the role id from the employee table
+            .then(([rows, fields]) => {
+                return inquirer.prompt({
+                    type: 'list',
+                    name: 'updateR',
+                    message: 'Select the employees new role',
+                    choices: rows.filter(z => !!z.roleId).map(z => z.roleId),
+                    validate: (value) => {
+                        if(value) {
+                            return true;
+                        } else {
+                            console.log('Select a role to continue.')
+                        }
+                    }
+                })
+            })
+            .then(function(updatedContent) {
+                let newCont = updatedContent.updateR
+                //have to have it formatted like this since two sperate spots being referenced
+                let newVal = [
+                    [newCont],
+                    [nameToUpd]
+                ] 
+
+                db.query('UPDATE employee SET roleId = ? WHERE firstN = ?', newVal, (err, result) => {
+                    if(err) {
+                        console.log(err)
+                        console.log(newVal)
+                    } else {
+                    console.log(result.affectedRows + " record(s) updated");
+                    return runApp();
+                    }
+            })
+        })
+    })
+}   
+
 
 
 runApp(); // running app
@@ -293,4 +351,4 @@ module.exports = db // exporting
 // db.query, look at notes from 12.11!!!! 
 
 // https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html
-// Aggregate Function Descriptions if needed !!!!!!
+// Aggregate Function Descriptions if needed !!!!!
