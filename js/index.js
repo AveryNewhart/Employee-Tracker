@@ -21,12 +21,6 @@ const db = mysql.createConnection( // mysql is requiring mysql2 (line3). It is t
     console.log('You are officially conncted to the Employer Database.') // message that will log in terminal if successful.
 );
 
-// look back to how i started a node appilcation, use team gen for ref.
-// a lot of code i can maybe use will be in the team gen too.
-// const ?? = () => {
-    //return inquier.prompt
-// }
-
 const runApp = () => {
     return inquirer.prompt
 
@@ -35,7 +29,7 @@ const runApp = () => {
             type: 'list',
             name: 'choice',
             message: 'Please choose one of the following.',
-            choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role']
+            choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'update an employee manager']
         }
     ])
     .then(function(data) {
@@ -77,6 +71,8 @@ const runApp = () => {
             addEmployeeQ(); // this is running the function to add an employees last name, first name, role, and their manager. Then the employee is sent to the database.
         } else if(data.choice === 'update an employee role') { // if user chooses this
             updateRoleQ(); // this is running the function to select an employee(id?) and you will be able to update their role and that is sent back to the database.
+        } else if(data.choice === 'update an employee manager') {
+            updateManId(); // this is running the function to update an employees manager
         }
     })
 }
@@ -338,17 +334,74 @@ const updateRoleQ = () => {
     })
 }   
 
+// BONUS
 
+// Start of viewing employees by department
+// ('SELECT firstN, depId FROM employee WHERE depId = slectedDepartmentToDisplay', valueNameThatWeConst, (err, result))
+
+// Start of viewing employess by manager
+// ('SELECT firstN, managerId FROM employee WHERE managerId = selectedManagerToDisplay', valueNameThatWeConst, (err, result))
+
+// Start of updating an employees manager
+// Look at how I updated an emplopyees role. Remember to look at the 'let newVal' to see how to have multiple arrays in one array.
+// ('UPDATE employee SET managerId = ? WHERE firstN = ?', valueNameThatWeConst, (err, result))
+const updateManId = () => {
+    db.promise().query('SELECT firstN FROM employee') //selecting first name from employee table
+    .then(([rows, fields]) => {
+        return inquirer.prompt({
+            type: 'list',
+            name: 'updEmp',
+            message: 'Select an emplployee to update:',
+            choices: rows.filter(p => !!p.firstN ).map(p => p.firstN),
+            validate: (value) => {
+                if(value) {
+                    return true;
+                } else {
+                    console.log('Select a employee to continue.')
+                }
+            }
+        })
+    })
+        .then(function(empNewMan) {
+            let empToUpd = empNewMan.updEmp
+
+            db.promise().query('SELECT managerId FROM employee') // selecting the role id from the employee table
+            .then(([rows, fields]) => {
+                return inquirer.prompt({
+                    type: 'list',
+                    name: 'updateM',
+                    message: 'Select the employees new manager',
+                    choices: rows.filter(y => !!y.managerId).map(y => y.managerId),
+                    validate: (value) => {
+                        if(value) {
+                            return true;
+                        } else {
+                            console.log('Select a manager to continue.')
+                        }
+                    }
+                })
+            })
+            .then(function(updatedManager) {
+                let updMan = updatedManager.updateM
+                //have to have it formatted like this since two sperate spots being referenced
+                let newEmpM = [
+                    [updMan],
+                    [empToUpd]
+                ] 
+
+                db.query('UPDATE employee SET managerId = ? WHERE firstN = ?', newEmpM, (err, result) => {
+                    if(err) {
+                        console.log(err)
+                    } else {
+                    console.log(result.affectedRows + " record(s) updated");
+                    console.log(newEmpM)
+                    return runApp();
+                    }
+            })
+        })
+    })
+}   
 
 runApp(); // running app
 
 module.exports = db // exporting 
-
-
-
-
-
-// db.query, look at notes from 12.11!!!! 
-
-// https://dev.mysql.com/doc/refman/8.0/en/aggregate-functions.html
-// Aggregate Function Descriptions if needed !!!!!

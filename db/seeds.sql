@@ -20,5 +20,5 @@ VALUES
 ("Newhart", "Avery", 1, 5),
 ("Davis", "Alex", 2, 5),
 ("Man", "Fred", 3, 5),
-("Boy", "Leo", 4, 5),
+("Boy", "Leo", 4, 3),
 ("Girl", "Rella", 5, NULL); -- NULL because they can't be their own manager
