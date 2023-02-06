@@ -35,7 +35,7 @@ const runApp = () => {
             type: 'list',
             name: 'choice',
             message: 'Please choose one of the following.',
-            choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'exit']
+            choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role']
         }
     ])
     .then(function(data) {
@@ -77,8 +77,6 @@ const runApp = () => {
             addEmployeeQ(); // this is running the function to add an employees last name, first name, role, and their manager. Then the employee is sent to the database.
         } else if(data.choice === 'update an employee role') { // if user chooses this
             updateRoleQ(); // this is running the function to select an employee(id?) and you will be able to update their role and that is sent back to the database.
-        } else if(data.first == 'exit') {
-            process.exit(console.log("Goodbye!")); // if user selects exit, it will exit the app.
         }
     })
 }
@@ -175,11 +173,12 @@ const addRoleQ = () => {
                 console.log(roleN) // roleN was set previously when deconstructing the data. referencing the name: 'roleName'.
                 console.log(roleS) // roleS was set previously when deconstructing the data. referencing the name: 'salary'.
                 console.log(depId) // depId was just deconstructed and it is referencing the selected department from the list in the prompt.
-                let values = [ // setting the reference to be used in the query.
+                // setting the reference to be used in the query.
+                let val = [ 
                     [roleN, roleS, depId]
                 ]
                 // inserting the name of the role, the roles salary, and which department it is into the role table.
-                db.query('INSERT INTO role (roleN, roleS, depId) VALUES (?)', values, (err, results) => {
+                db.query('INSERT INTO role (roleN, roleS, depId) VALUES (?)', val, (err, results) => {
                     if(err) { // if error, and error will display and you will be returned to the first question
                         console.log(err);
                         return runApp(); 
