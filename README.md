@@ -16,7 +16,8 @@
   - You must install the following: Node, so when you run npm i it will install inquier and mysql2.
 
   ## Usage
-  - video here
+  - Video: [employee-tracker-vid.webm](https://user-images.githubusercontent.com/113143631/217101663-7e348f61-fa2f-4558-b722-a7bd3bafb66c.webm)
+
 
   ## License
   - license : MIT License ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
